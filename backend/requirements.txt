@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+motor
+PyPDF2
+pytesseract
+openai
+langchain
+passlib[bcrypt]
+python-jose
+pandas
+openpyxl
+pdf2image
+transformers
+torch

@@ -1,0 +1,35 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Node/React
+node_modules/
+npm-debug.log
+yarn-error.log
+frontend/build
+
+# VS Code
+.vscode/
+
+# Mac
+.DS_Store
+
+# Git
+.git
+.gitignore
+
+# Logs
+*.log
+
+# Misc
+*.swp
+*.swo
