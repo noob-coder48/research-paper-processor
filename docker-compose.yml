@@ -3,14 +3,14 @@ version: '3.8'
 services:
   backend:
     build:
-      context: .
-      dockerfile: backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     volumes:
       - ./backend:/app
     ports:
       - "8000:8000"
     environment:
-      - OPENAI_API_KEY=your_key_here
+      - HF_API_TOKEN=your_key_here
       - MONGO_URI=mongodb://mongo:27017/research_papers
     depends_on:
       - mongo
@@ -18,8 +18,8 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: frontend/Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
     volumes:
       - ./frontend:/app
     ports:

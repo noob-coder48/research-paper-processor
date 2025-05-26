@@ -1,29 +1,22 @@
-# Use official Python image
-FROM python:3.10-slim
+# Use Node.js runtime
+FROM node:18-alpine
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set work directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    poppler-utils \
-    tesseract-ocr \
-    libgl1-mesa-glx \
-    && rm -rf /var/lib/apt/lists/*
+# Copy package.json and package-lock.json (or yarn.lock)
+COPY package.json ./
 
-# Install Python dependencies
-COPY backend/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
-# Copy the backend app
-COPY backend/ .
+# Copy the rest of the application code
+COPY . ./
 
-# Expose the API port (adjust based on FastAPI or Flask)
-EXPOSE 8000
+# Set the API URL build argument (can be overridden at build time)
+ARG REACT_APP_API_URL=http://localhost:8000
+ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 
-# Run the backend (FastAPI example)
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose port 3000
+EXPOSE 3000
+
+# Start the development server
+CMD ["npm", "start"]
