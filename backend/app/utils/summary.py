@@ -73,7 +73,7 @@ Return the result strictly in this JSON format:
 }}
 
 Text:
-{text[:4000]}
+{text[:12000]}
     """
 
     payload = {

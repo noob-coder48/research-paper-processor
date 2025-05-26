@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Paper, Alert } from '@mui/material';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -8,6 +9,7 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const history = useHistory(); // Change from useHistory
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -16,12 +18,21 @@ const Signup = () => {
       return;
     }
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/signup`, { email, password });
-      setSuccess("Signup successful! Please log in.");
-      setError('');
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/signup`, { email, password });
+      if (response.data.access_token) {
+        localStorage.setItem('token', response.data.access_token);
+        setSuccess("Signup successful! Logging you in...");
+        setError('');
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        setTimeout(() => {
+          history.push('/dashboard'); // Change from history.push('/dashboard')
+        }, 1000);
+      } else {
+        setSuccess("Signup successful! Please log in.");
+        setError('');
+      }
     } catch (err) {
       setError("Signup failed. Please try again.");
       setSuccess('');

@@ -11,7 +11,7 @@ services:
       - "8000:8000"
     environment:
       - HF_API_TOKEN=your_key_here
-      - MONGO_URI=mongodb://mongo:27017/research_papers
+      - MONGODB_URI=mongodb://mongo:27017/research_papers
     depends_on:
       - mongo
     restart: unless-stopped
